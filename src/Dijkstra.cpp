@@ -1,8 +1,6 @@
 //Print minimum distances from source vertex to all others
-//Solution : Dijkstra’s shortest path algorithm (Greedy Algorithm)
-#include <iostream>
-#include <unordered_map>
-#include <forward_list>
+//Solution : Dijkstras shortest path algorithm (Greedy Algorithm)
+#include "LibsAndClassDeclarations.h"
 
 
 namespace Dijkstra
@@ -13,10 +11,10 @@ namespace Dijkstra
 
 	void showGraph(const GRAPH_TYPE &graph)
 	{
-		std::cout << "vertex = [adjacent : weight] " << std::endl;
+		std::cout << "\nGRAPH vertex - [adjacent : weight]\n" << std::endl;
 		for (const auto &vertex : graph)
 		{
-			std::cout << vertex.first << " = ";
+			std::cout << vertex.first << " - ";
 			for (const auto &adjacent : vertex.second)
 			{
 				std::cout << "[" << adjacent.first << " : " << adjacent.second << "] ";
@@ -29,7 +27,7 @@ namespace Dijkstra
 	void fillShortestVertexDistance(const GRAPH_TYPE &graph, SHORTES_VERTEX_DISTANCE_TYPE &shortestVertexDistances, uint32_t sourceVertex)
 	{
 		for (const auto &vertex : graph)
-			shortestVertexDistances.insert({ vertex.first, {MAX_UINT_32_T, false} });	//std::make_pair<uint32_t, bool>() slower - construct object, move object, std::initilizer_list construct object
+			shortestVertexDistances.insert({ vertex.first, {MAX_UINT_32_T, false} });	//std::initilizer_list faster solution in that case construct object - std::make_pair<uint32_t, bool>() slower - construct object, then move object
 
 		shortestVertexDistances[sourceVertex].first = 0u;
 	}
@@ -109,7 +107,7 @@ namespace Dijkstra
 	void showAllVertexDistanceFromSourceVertex(const SHORTES_VERTEX_DISTANCE_TYPE &shortestVertexDistances, uint32_t sourceVertex)
 	{
 		std::cout << "Dijkstras shortest path algorithm (Greedy Algorithm)" << std::endl;
-		std::cout << "Vertex : Distance from source " << sourceVertex << std::endl;
+		std::cout << "Vertex : Distance from source " << sourceVertex << std::endl << std::endl;
 		for (const auto &vertex : shortestVertexDistances)
 			std::cout << vertex.first << " : " << vertex.second.first << std::endl;
 	}
@@ -192,3 +190,5 @@ int main()
 
 	return 0;
 }
+
+//clear && mkdir build && cd build && cmake .. && make && ./Dijkstra
